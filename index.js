@@ -163,9 +163,9 @@ framework.hears("Create", function(bot){
 /*
   Framework hears comments
 */
-framework.hears("Comments", function(bot){
+framework.hears("Comments", function(bot,trigger){
   responded = true;
-  bot.say("processing request -- \n");
+  /*bot.say("processing request -- \n");
   let outputString = "";
   // Authentication
   let username = 'amiroy';
@@ -181,7 +181,7 @@ framework.hears("Comments", function(bot){
     method: 'GET',
     headers: myHeaders,
     redirect: 'follow'
-  };*/
+  };
   bot.say("firing request\n");
   // fire the rest api and parse the output
   let response =fetch("https://jira-eng-gpk2.cisco.com/jira/rest/api/latest/issue/BWKS-2164/comment?orderBy=-created&startAt=0&maxResults=2",
@@ -195,12 +195,19 @@ framework.hears("Comments", function(bot){
   }
   else{
     outputString+="Error : "+response.status;
-  }
+  }*/
+  bot.say("so far good");
   //Print the comment
-  bot.say("markdown", outputString);
+  fetch('https://api.github.com/users/manishmshiva')
+    // Handle success
+    .then(response => response.json())  // convert to json
+    .then(json => console.log(json))    //print data to console
+    .catch(err => console.log('Request Failed', err)); // Catch errors
+  bot.say(" Done");
+  
 });
 
-// Buttons & Cards data
+// Buttons & Cards data;
 let cardJSON =
 {
   $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
