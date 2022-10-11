@@ -138,6 +138,68 @@ framework.hears("say hi to everyone", function (bot) {
     });
 });
 
+
+/*
+  Framework hears Amit 
+*/
+framework.hears("Amit",function(bot){
+  responded = true;
+  // Print Details about amit 
+  let outputString = "Name - Amit Roy \n Designation: Software Developer \n Team: Webex Collaboration";
+  bot.say("markdown",outputString);
+});
+
+
+/*
+  Framework hears JIRA
+*/
+framework.hears("Create", function(bot){
+  responsded = true;
+  // 1.  Perform basic actions
+  // 2. jira_func1(arg1,arg2,arg3);
+  // 3. Output the result
+});
+
+/*
+  Framework hears comments
+*/
+framework.hears("Comments", function(bot){
+  responded = true;
+  bot.say("processing request -- \n");
+  let outputString = "";
+  // Authentication
+  let username = 'amiroy';
+  let password = '1234';
+  let auth = Buffer.from(`${username}:${password}`,'base64');
+
+  //prepare header for api
+  //let myHeaders = new Headers();
+  //myHeaders.append("Authorization", "Basic YW1pcm95OlNyaXZhc3RhdmFAMDMy");
+  //myHeaders.append("Cookie", "JIRASESSIONID=D2C0C0DEC35B419B7453B99062EBFA31; atlassian.xsrf.token=BOZI-RZAB-0Q2B-FFXS_0f35069a202b834b3382e630a633b07534b094cf_lin");
+  bot.say("Header prepared\n");
+  /* let requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };*/
+  bot.say("firing request\n");
+  // fire the rest api and parse the output
+  let response =fetch("https://jira-eng-gpk2.cisco.com/jira/rest/api/latest/issue/BWKS-2164/comment?orderBy=-created&startAt=0&maxResults=2",
+    {
+      headers: {
+        'Authorisation' : `Basic ${auth}`
+      }
+    });
+  if(response.ok){
+    outputString += "Success : "+response.status;
+  }
+  else{
+    outputString+="Error : "+response.status;
+  }
+  //Print the comment
+  bot.say("markdown", outputString);
+});
+
 // Buttons & Cards data
 let cardJSON =
 {
@@ -227,6 +289,8 @@ function sendHelp(bot) {
     '1. **framework**   (learn more about the Webex Bot Framework) \n' +
     '2. **info**  (get your personal details) \n' +
     '3. **space**  (get details about this space) \n' +
+    '3. **Amit** (gives Detail about Amit) \n' +
+    '4. **Comments** (Returns all the comments of Jira Issue) \n' +
     '4. **card me** (a cool card!) \n' +
     '5. **say hi to everyone** (everyone gets a greeting using a call to the Webex SDK) \n' +
     '6. **reply** (have bot reply to your message) \n' +
